@@ -1,5 +1,9 @@
 module Surveyor
   class FreeTextQuestion < Question
-    # your code goes here
+    attr_reader :answer
+    
+    def valid_answer?(answer)
+      answer.is_a?(String)
+    end
   end
 end
