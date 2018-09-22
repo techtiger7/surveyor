@@ -7,9 +7,9 @@ module Surveyor
     # Constructor for Survey instance
     # Input: a single hash containing {name: "value"}
     def initialize(args)
-      @name = args[:name] #extract value from name and store as instance variable
-      @questions = Array.new
-      @responses = Array.new
+      @name = args[:name] # extract value from name and store as instance variable
+      @questions = []
+      @responses = []
     end
 
     # Add question to the Survey instance questions Array

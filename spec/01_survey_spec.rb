@@ -18,4 +18,10 @@ RSpec.describe Surveyor::Survey do
     subject.add_response(response)
     expect(subject.responses).to include(response)
   end
+
+  it "can find a survey response by email address" do
+    response = double("Response", :email => "hello_world@mail.com")
+    allow(response).to receive(:valid_answer?) { false }
+    subject.add_response(response)
+    expect(subject.find_response("hello_world@mail.com")).to eq(response)
 end
