@@ -12,8 +12,5 @@ module Surveyor
         @answers << answer
       end
     end
-    def get_answers
-      @answers.values
-    end
   end
 end

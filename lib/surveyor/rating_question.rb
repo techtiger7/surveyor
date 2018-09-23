@@ -6,9 +6,9 @@ module Surveyor
     # Method for validating rating is between 1 and 5
     # (inclusive)
     # params:
-    # +rating+:: number to check
-    def valid_answer?(rating)
-      rating >= 1 && rating <= 5
+    # +rating_value+:: number to check
+    def valid_answer?(rating_value)
+      rating_value >= 1 && rating_value <= 5
     end
   end
 end
