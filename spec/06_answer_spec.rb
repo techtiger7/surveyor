@@ -15,7 +15,7 @@ end
 RSpec.describe Surveyor::Answer do
   subject { described_class.new(2, double(:question)) }
 
-  it 'has a number value' do
+  it 'has a number value if a number is passed in' do
     expect(subject.value).to eq(2)
   end
 

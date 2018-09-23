@@ -19,9 +19,38 @@ RSpec.describe Surveyor::Survey do
     expect(subject.responses).to include(response)
   end
 
-  it "can find a survey response by email address" do
-    response = double("Response", :email => "hello_world@mail.com")
-    allow(response).to receive(:valid_answer?) { false }
+  it "can detect if a user has already submitted a response" do
+    email = "hello_world@mail.com"
+    response = Surveyor::Response.new(email: email)
     subject.add_response(response)
-    expect(subject.find_response("hello_world@mail.com")).to eq(response)
+    expect(subject.find_response(email:email)).to eq(email)
+  end
+
+  it "returns nil if a response for passed in email is not found" do
+    expect(subject.find_response(email: "hello_world@mail.com")).to eq(nil)
+  end
+
+  it "returns `false` if user with email has not responded to survey yet" do
+    expect(subject.has_user_responded(email: "hello_world@mail.com")).to eq(false)
+  end
+
+  it "returns `true` if user with email has responded to survey" do
+    email = "hello_world@mail.com"
+    response = Surveyor::Response.new(email: email)
+    subject.add_response(response)
+    expect(subject.has_user_responded(email: "hello_world@mail.com")).to eq(true)
+  end
+
+  it "returns a hash breakdown of results for a rating question" do
+    response1 = Surveyor::Response.new(email: "hello_world@mail.com")
+    response2 = Surveyor::Response.new(email: "mail@hello_world.com")
+    question1 = Surveyor::RatingQuestion.new(title: "Question 1")
+    answer1 = Surveyor::Answer.new(1, question1)
+    answer2 = Surveyor::Answer.new(4, question1)
+    response1.add_answer(answer: answer1)
+    response2.add_answer(answer: answer2)
+    subject.add_response(response1)
+    subject.add_response(response2)
+    expect(subject.rating_question_breakdown(question1)).to eql({ 1 => 1, 2 => 0, 3 => 0, 4 => 1, 5 => 0})
+  end
 end
