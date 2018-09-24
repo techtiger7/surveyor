@@ -24,6 +24,7 @@ module Surveyor
     def add_response(response:)
       @responses << response
     end
+    
     # Check if user has already responsed to this survey
     # @param args [Hash] hash containing `:email` 
     def has_user_responded(email:)
