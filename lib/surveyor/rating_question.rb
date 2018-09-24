@@ -3,7 +3,6 @@ module Surveyor
   # questions, validating that answer is between
   # 1 and 5 (inclusive)
   class RatingQuestion < Question
-
     # Check if passed in value is an Integer between 1 and 5 (inclusive)
     # @param value [Integer] value to check
     # @return [Boolean] true if valid, false if not

@@ -18,6 +18,4 @@ RSpec.describe Surveyor::Answer do
   it 'has a number value if an Integer is passed in' do
     expect(subject.value).to eq(2)
   end
-
 end
-

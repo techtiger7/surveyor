@@ -23,7 +23,7 @@ RSpec.describe Surveyor::Survey do
     email = "hello_world@mail.com"
     response = Surveyor::Response.new(email: email)
     subject.add_response(response: response)
-    expect(subject.find_response(email:email)).to eq(response)
+    expect(subject.find_response(email: email)).to eq(response)
   end
 
   it "returns nil if a response for passed in email is not found" do
@@ -31,14 +31,14 @@ RSpec.describe Surveyor::Survey do
   end
 
   it "returns `false` if user with email has not responded to survey yet" do
-    expect(subject.has_user_responded(email: "hello_world@mail.com")).to eq(false)
+    expect(subject.user_responded?(email: "hello_world@mail.com")).to eq(false)
   end
 
   it "returns `true` if user with email has responded to survey" do
     email = "hello_world@mail.com"
     response = Surveyor::Response.new(email: email)
     subject.add_response(response: response)
-    expect(subject.has_user_responded(email: "hello_world@mail.com")).to eq(true)
+    expect(subject.user_responded?(email: "hello_world@mail.com")).to eq(true)
   end
 
   it "returns a hash breakdown of results for a rating question" do
@@ -51,6 +51,6 @@ RSpec.describe Surveyor::Survey do
     response2.add_answer(answer: answer2)
     subject.add_response(response: response1)
     subject.add_response(response: response2)
-    expect(subject.rating_question_breakdown(question: question1)).to eql({ 1 => 1, 2 => 0, 3 => 0, 4 => 1, 5 => 0})
+    expect(subject.rating_question_breakdown(question: question1)).to eql(1 => 1, 2 => 0, 3 => 0, 4 => 1, 5 => 0)
   end
 end

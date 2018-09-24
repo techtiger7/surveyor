@@ -14,9 +14,7 @@ module Surveyor
     # @param answer [Answer] instance of Answer to be added to Response
     def add_answer(answer:)
       # Call against answer.question to utilise correct validation method for question type
-      if answer.question.valid_answer?(value: answer.value)
-        @answers << answer
-      end
+      @answers << answer if answer.question.valid_answer?(value: answer.value)
     end
   end
 end

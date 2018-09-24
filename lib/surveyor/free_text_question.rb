@@ -1,5 +1,5 @@
 module Surveyor
-  # A simple class for storing free text questions, questions with answers 
+  # A simple class for storing free text questions, questions with answers
   # which are text-based, inherits from Question class
   class FreeTextQuestion < Question
     # Checks whether passed in value is a String

@@ -1,8 +1,8 @@
 module Surveyor
-  # A survey for storing questions and user responses, including answers to 
+  # A survey for storing questions and user responses, including answers to
   # these questions
   class Survey
-    attr_reader :name # a String 
+    attr_reader :name # a String
     attr_reader :questions # an Array of Question
     attr_reader :responses # an array of Response
 
@@ -26,20 +26,20 @@ module Surveyor
     end
 
     # Check if user has already responsed to this survey
-    # @param args [Hash] hash containing `:email` 
-    def has_user_responded(email:)
+    # @param args [Hash] hash containing `:email`
+    def user_responded?(email:)
       # check all responses and if any contain :email return true
       @responses.any? { |r| r.email == email }
     end
 
     # Find a response within Survey by email address
-    # @param args [Hash] hash containing `:email` 
+    # @param args [Hash] hash containing `:email`
     # @return [Response, nil] Response found or `nil` if no resonse found
     def find_response(email:)
       # store all responses which contain passed in :email
       result = @responses.detect { |r| r.email == email }
       # check response with :email was found and return response or `nil` if none
-      (result.nil?) ? nil : result
+      result.nil? ? nil : result
     end
 
     # Tally breakdown of all answers for a particular rating question
@@ -47,10 +47,13 @@ module Surveyor
     # @return [Hash] a Hash containing count of each rating for question passed in
     def rating_question_breakdown(question:)
       # initialize result Hash to build on
-      result = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0}
+      result = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }
       # check all responses answers for rating questions and increment associated value
-      @responses.each { |r| r.answers.each { |a| if(a.question == question) then result[a.value] += 1 end } }
-      return result
+      @responses.each do |r|
+        r.answers.each do |a|
+          result[a.value] += 1 if a.question == question
+        end
+      end
     end
   end
 end
