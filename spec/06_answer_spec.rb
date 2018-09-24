@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Surveyor::Answer do
-  subject { described_class.new("Hello World", double(:question)) }
+  subject { described_class.new(value: "Hello World", question: double(:question)) }
 
-  it 'has a value' do
+  it 'has a value if a String is passed in' do
     expect(subject.value).to eq("Hello World")
   end
 
@@ -13,9 +13,9 @@ RSpec.describe Surveyor::Answer do
 end
 
 RSpec.describe Surveyor::Answer do
-  subject { described_class.new(2, double(:question)) }
+  subject { described_class.new(value: 2, question: double(:question)) }
 
-  it 'has a number value if a number is passed in' do
+  it 'has a number value if an Integer is passed in' do
     expect(subject.value).to eq(2)
   end
 

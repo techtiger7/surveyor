@@ -6,8 +6,8 @@ module Surveyor
     # Constructor for Question instances
     # params:
     # +args+:: hash containing {title: '_value_::'}
-    def initialize(args)
-      @title = args[:title]
+    def initialize(title:)
+      @title = title
     end
   end
 end

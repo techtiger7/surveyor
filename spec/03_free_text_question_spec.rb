@@ -9,11 +9,11 @@ RSpec.describe Surveyor::FreeTextQuestion do
 
   context 'valid_answer?' do
     it 'is valid when it is a String' do
-      expect(subject.valid_answer?('Hello World')).to eq(true)
+      expect(subject.valid_answer?(value: 'Hello World')).to eq(true)
     end
 
     it 'is invalid when it is not a String' do
-      expect(subject.valid_answer?(1)).to eq(false)
+      expect(subject.valid_answer?(value: 1)).to eq(false)
     end
   end
 end

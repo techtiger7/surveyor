@@ -7,8 +7,8 @@ module Surveyor
     # (inclusive)
     # params:
     # +rating_value+:: number to check
-    def valid_answer?(rating_value)
-      rating_value >= 1 && rating_value <= 5
+    def valid_answer?(value:)
+      value >= 1 && value <= 5
     end
   end
 end
