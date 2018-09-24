@@ -24,7 +24,7 @@ module Surveyor
     def add_response(response:)
       @responses << response
     end
-    
+
     # Check if user has already responsed to this survey
     # @param args [Hash] hash containing `:email` 
     def has_user_responded(email:)
@@ -34,19 +34,21 @@ module Surveyor
 
     # Find a response within Survey by email address
     # @param args [Hash] hash containing `:email` 
+    # @return [Response, nil] Response found or `nil` if no resonse found
     def find_response(email:)
       # store all responses which contain passed in :email
       result = @responses.detect { |r| r.email == email }
       # check response with :email was found and return response or `nil` if none
-      (result.nil?) ? nil : result.email
+      (result.nil?) ? nil : result
     end
 
     # Tally breakdown of all answers for a particular rating question
     # @param question [RatingQuestion] rating question for which to tally answers
+    # @return [Hash] a Hash containing count of each rating for question passed in
     def rating_question_breakdown(question:)
-      # initial result Hash to build on
+      # initialize result Hash to build on
       result = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0}
-      # check all responses answers for rating questions and increment associated value selected
+      # check all responses answers for rating questions and increment associated value
       @responses.each { |r| r.answers.each { |a| if(a.question == question) then result[a.value] += 1 end } }
       return result
     end

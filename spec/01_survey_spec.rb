@@ -23,7 +23,7 @@ RSpec.describe Surveyor::Survey do
     email = "hello_world@mail.com"
     response = Surveyor::Response.new(email: email)
     subject.add_response(response: response)
-    expect(subject.find_response(email:email)).to eq(email)
+    expect(subject.find_response(email:email)).to eq(response)
   end
 
   it "returns nil if a response for passed in email is not found" do
