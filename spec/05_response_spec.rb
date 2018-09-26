@@ -9,17 +9,15 @@ RSpec.describe Surveyor::Response do
 
   it "can have answers to FreeTextQuestion added when value is valid String" do
     question = double(:free_text_question)
-    expect(question).to receive(:valid_answer?) { true }
-    answer = Surveyor::Answer.new(value: "User Answer", question: question)
-    subject.add_answer(answer: answer)
+    allow(question).to receive(:valid_answer?) { true }
+    subject.add_answer(question: question, value: "User Answer")
     expect(subject.answers[0].value).to eq("User Answer")
   end
 
   it "can have answers to RatingQuestion added when value is valid Integer" do
     question = double(:rating_question)
-    expect(question).to receive(:valid_answer?) { true }
-    answer = Surveyor::Answer.new(value: 2, question: question)
-    subject.add_answer(answer: answer)
+    allow(question).to receive(:valid_answer?) { true }
+    subject.add_answer(question: question, value: 2)
     expect(subject.answers[0].value).to eq(2)
   end
 
@@ -32,8 +30,7 @@ RSpec.describe Surveyor::Response do
   it "can be asked for a list of answers" do
     question = double(:free_text_question)
     allow(question).to receive(:valid_answer?) { true }
-    answer = Surveyor::Answer.new(value: "User Answer", question: question)
-    subject.add_answer(answer: answer)
-    expect(subject.answers).to eq([answer])
+    subject.add_answer(question: question, value: "User Answer")
+    expect(subject.answers[0].value).to eq("User Answer")
   end
 end

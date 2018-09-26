@@ -12,9 +12,9 @@ module Surveyor
 
     # Add an answer to the answers Array if valid
     # @param answer [Answer] instance of Answer to be added to Response
-    def add_answer(answer:)
+    def add_answer(question:, value:)
       # Call against answer.question to utilise correct validation method for question type
-      @answers << answer if answer.question.valid_answer?(value: answer.value)
+      @answers << Answer.new(question: question, value: value) if question.valid_answer?(value: value)
     end
   end
 end

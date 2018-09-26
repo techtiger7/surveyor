@@ -46,7 +46,6 @@ module Surveyor
     # @param question [RatingQuestion] rating question for which to tally answers
     # @return [Hash] a Hash containing count of each rating for question passed in
     def rating_question_breakdown(question:)
-      # initialize result Hash to build on
       result = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }
       # check all responses answers for rating questions and increment associated value
       @responses.each do |r|
@@ -54,6 +53,7 @@ module Surveyor
           result[a.value] += 1 if a.question == question
         end
       end
+      result
     end
   end
 end
