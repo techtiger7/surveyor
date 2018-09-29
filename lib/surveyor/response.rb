@@ -1,20 +1,22 @@
 module Surveyor
   class Response
-    attr_reader :email # a String holding user email value
+    attr_reader :email
     attr_reader :answers # an Array of Answer
 
     # Constructor for Response
     # @param email [String] email address of user responding
     def initialize(email:)
       @email = email
-      @answers = [] # initialise empty answers Array
+      @answers = []
     end
 
     # Add an answer to the answers Array if valid
-    # @param answer [Answer] instance of Answer to be added to Response
+    # @param question [Question] instance of Question for which Answer is being added
+    # @param value [String, int] a String or an int based on type of question being answered
     def add_answer(question:, value:)
-      # Call against answer.question to utilise correct validation method for question type
-      @answers << Answer.new(question: question, value: value) if question.valid_answer?(value: value)
+      raise ArgumentError, "Invalid value for question type" unless question.valid_answer?(value: value)
+
+      @answers << Answer.new(question: question, value: value)
     end
   end
 end

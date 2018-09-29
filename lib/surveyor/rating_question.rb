@@ -1,7 +1,5 @@
 module Surveyor
-  # Class extends Question for Rating based
-  # questions, validating that answer is between
-  # 1 and 5 (inclusive)
+  # Class extends Question for Rating based questions on a scale of 1 to 5
   class RatingQuestion < Question
     # Check if passed in value is an Integer between 1 and 5 (inclusive)
     # @param value [Integer] value to check

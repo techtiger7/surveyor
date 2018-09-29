@@ -1,8 +1,7 @@
 module Surveyor
-  # Class defining the structure of a Question
-  # including its title
+  # Class defining the structure of a Question including its title
   class Question
-    attr_reader :title # String title of the Question
+    attr_reader :title
 
     # Constructor for Question instances
     # @param title [String] the title of the Question

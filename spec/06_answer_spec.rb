@@ -1,21 +1,36 @@
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe Surveyor::Answer do
-  subject { described_class.new(value: "Hello World", question: double(:question)) }
+  free_text_question = Surveyor::FreeTextQuestion.new(title: "Test Free Text Question")
+  rating_question = Surveyor::RatingQuestion.new(title: "Test Rating Question")
 
-  it 'has a value if a String is passed in' do
+  it "is not possible to initialize an answer without a question" do
+    subject = described_class.new(value: "Hello World")
+  rescue ArgumentError
+    expect(subject).to be(nil)
+  end
+
+  it "raises an error if attempt made to initialize without question" do
+    expect { described_class.new(value: "Hello World") }.to raise_error(ArgumentError)
+  end
+
+  it "has a question attribute" do
+    subject = described_class.new(question: free_text_question, value: "Hello World")
+    expect(subject.question).not_to be_nil
+  end
+
+  it "can have a String value if a free text question is passed in" do
+    subject = described_class.new(question: free_text_question, value: "Hello World")
     expect(subject.value).to eq("Hello World")
   end
 
-  it 'has a question' do
-    expect(subject.question).not_to be_nil
-  end
-end
-
-RSpec.describe Surveyor::Answer do
-  subject { described_class.new(value: 2, question: double(:question)) }
-
-  it 'has a number value if an Integer is passed in' do
+  it "can have an integer value is a rating question is passed in" do
+    subject = described_class.new(question: rating_question, value: 2)
     expect(subject.value).to eq(2)
+  end
+
+  it "raises an error if passed in value does not match question type" do
+    expect { described_class.new(question: free_text_question, value: 2) }.to raise_error(ArgumentError)
+    expect { described_class.new(question: rating_question, value: "Hello World") }.to raise_error(ArgumentError)
   end
 end
