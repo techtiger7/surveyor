@@ -12,7 +12,7 @@ module Surveyor
 
     # Add an answer to the answers Array if valid
     # @param question [Question] instance of Question for which Answer is being added
-    # @param value [String, int] a String or an int based on type of question being answered
+    # @param value [String, Integer] a String or an Integer based on type of question being answered
     def add_answer(question:, value:)
       raise ArgumentError, "Invalid value for question type" unless question.valid_answer?(value: value)
 

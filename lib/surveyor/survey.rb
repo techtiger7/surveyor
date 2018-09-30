@@ -15,6 +15,7 @@ module Surveyor
     end
 
     # Add question to the Survey instance questions Array
+    # @param question [Question] The Question instance to be added to this Survey
     def add_question(question:)
       raise ArgumentError, "question: must be a Question instance" unless question.is_a?(Question)
 
@@ -22,6 +23,7 @@ module Surveyor
     end
 
     # Add response to the Survey instance responses Array
+    # @param response [Response] The Response instance to be added to this Survey
     def add_response(response:)
       raise ArgumentError, "response: must be a Response instance" unless response.is_a?(Response)
 
@@ -30,12 +32,13 @@ module Surveyor
 
     # Check if user has already responsed to this survey
     # @param email [String] String representation of an email address
+    # @return [Boolean] true if user has responded, false if not
     def user_responded?(email:)
       @responses.any? { |r| r.email == email }
     end
 
     # Find a response within Survey by email address
-    # @param args [Hash] hash containing `:email`
+    # @param email [String] String representation of an email address
     # @return [Response, nil] Response found or `nil` if no resonse found
     def find_response(email:)
       result = @responses.detect { |r| r.email == email }
@@ -43,7 +46,7 @@ module Surveyor
     end
 
     # Tally breakdown of all answers for a particular rating question
-    # @param question [RatingQuestion] rating question for which to tally answers
+    # @param rating_question [RatingQuestion] rating question for which to tally answers
     # @return [Hash] a Hash containing count of each rating value for question passed in
     def rating_question_tally(rating_question:)
       result = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }
