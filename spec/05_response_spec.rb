@@ -1,10 +1,20 @@
 require "spec_helper"
 
 RSpec.describe Surveyor::Response do
-  subject { described_class.new(email: "hello-world77@me.com") }
+  subject { described_class.new(email: "hello-world77@me.com", segments: ["Melbourne", "Female"]) }
 
   it "has an email address" do
     expect(subject.email).to eq("hello-world77@me.com")
+  end
+
+  it "has segments" do
+    expect(subject.segments.length).to eq(2)
+  end
+
+  it "can be asked for answers" do
+    question = Surveyor::FreeTextQuestion.new(title: "Test Question")
+    answer = subject.add_answer(question: question, value: "User Answer")
+    expect(subject.answers).to eq(answer)
   end
 
   context "add_answer" do
@@ -42,9 +52,10 @@ RSpec.describe Surveyor::Response do
     end
   end
 
-  it "can be asked for answers" do
-    question = Surveyor::FreeTextQuestion.new(title: "Test Question")
-    answer = subject.add_answer(question: question, value: "User Answer")
-    expect(subject.answers).to eq(answer)
+  context "segments_contains?" do
+    it "can be checked for specific segment values" do
+      expect(subject.segments_contains?(segments: ["Melbourne", "Female"])).to eq(true)
+      expect(subject.segments_contains?(segments: ["Sydney", "Male"])).to eq(false)
+    end
   end
 end
