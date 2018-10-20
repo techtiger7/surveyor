@@ -56,6 +56,7 @@ RSpec.describe Surveyor::Response do
     it "can be checked for specific segment values" do
       expect(subject.segments_contains?(segments: ["Melbourne", "Female"])).to eq(true)
       expect(subject.segments_contains?(segments: ["Sydney", "Male"])).to eq(false)
+      expect(subject.segments_contains?(segments: [])).to eq(true)
     end
   end
 end

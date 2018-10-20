@@ -1,7 +1,7 @@
 module Surveyor
   class Response
 
-    attr_reader :email, :answers, :segments # an Array of Answer
+    attr_reader :email, :answers, :segments
 
     # Constructor for Response
     # @param email [String] email address of user responding

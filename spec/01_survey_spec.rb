@@ -71,8 +71,8 @@ RSpec.describe Surveyor::Survey do
   end
 
   context "rating_question_tally" do
-    response1 = Surveyor::Response.new(email: "hello_world@mail.com")
-    response2 = Surveyor::Response.new(email: "mail@hello_world.com")
+    response1 = Surveyor::Response.new(email: "hello_world@mail.com", segments: ["Melbourne", "Male"])
+    response2 = Surveyor::Response.new(email: "mail@hello_world.com", segments: ["Sydney", "Female"])
     question1 = Surveyor::RatingQuestion.new(title: "Question 1")
     question2 = Surveyor::RatingQuestion.new(title: "Question 2")
     response1.add_answer(question: question1, value: 1)
@@ -84,13 +84,19 @@ RSpec.describe Surveyor::Survey do
       expect(subject.rating_question_tally(rating_question: question1)).to eq(1 => 1, 2 => 0, 3 => 0, 4 => 1, 5 => 0)
     end
 
-    it "only returns a tally of valid results for the relevant rating question queried" do
+    it "only returns a tally of valid results for relevant rating question and responses containing matching segments" do
       response2.add_answer(question: question2, value: 6)
-    rescue ArgumentError
+      rescue ArgumentError
       response2.add_answer(question: question2, value: 5)
       subject.add_response(response: response1)
       subject.add_response(response: response2)
       expect(subject.rating_question_tally(rating_question: question2)).to eq(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 1)
+    end
+
+    it "only returns tally of responses which belonging to passed in segments" do
+      subject.add_response(response: response2)
+      expect(subject.rating_question_tally(rating_question: question2, segments: ["Melbourne", "Male"])).to eq(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0)
+      expect(subject.rating_question_tally(rating_question: question2, segments: ["Sydney", "Female"])).to eq(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 1)
     end
   end
 end
