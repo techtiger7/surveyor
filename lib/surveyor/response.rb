@@ -1,11 +1,10 @@
 module Surveyor
   class Response
-
     attr_reader :email, :answers, :segments
 
     # Constructor for Response
     # @param email [String] email address of user responding
-    def initialize(email:, segments:[])
+    def initialize(email:, segments: [])
       @email = email
       @answers = []
       @segments = segments
@@ -16,6 +15,7 @@ module Surveyor
     # @param value [String, Integer] a String or an Integer based on type of question being answered
     def add_answer(question:, value:)
       raise ArgumentError, "Invalid value for question type" unless question.valid_answer?(value: value)
+
       @answers << Answer.new(question: question, value: value)
     end
 
@@ -23,12 +23,10 @@ module Surveyor
     # @param segments [Array of String] an Array of Strings defining the segments to check
     # @return [boolean] true if ALL segments passed in are contained in Response
     def segments_contains?(segments:)
-      for segment in segments do
-        if !@segments.include?(segment)
-          return false
-        end
+      segments.each do |segment|
+        return false unless @segments.include?(segment)
       end
-      return true
+      true
     end
   end
 end

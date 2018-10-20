@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe Surveyor::Response do
-  subject { described_class.new(email: "hello-world77@me.com", segments: ["Melbourne", "Female"]) }
+  subject { described_class.new(email: "hello-world77@me.com", segments: %w[Melbourne Female]) }
 
   it "has an email address" do
     expect(subject.email).to eq("hello-world77@me.com")
@@ -54,8 +54,8 @@ RSpec.describe Surveyor::Response do
 
   context "segments_contains?" do
     it "can be checked for specific segment values" do
-      expect(subject.segments_contains?(segments: ["Melbourne", "Female"])).to eq(true)
-      expect(subject.segments_contains?(segments: ["Sydney", "Male"])).to eq(false)
+      expect(subject.segments_contains?(segments: %w[Melbourne Female])).to eq(true)
+      expect(subject.segments_contains?(segments: %w[Sydney Male])).to eq(false)
       expect(subject.segments_contains?(segments: [])).to eq(true)
     end
   end

@@ -47,14 +47,13 @@ module Surveyor
 
     # Tally breakdown of all answers for a particular rating question
     # @param rating_question [RatingQuestion] rating question for which to tally answers
-    # @return [Hash] a Hash containing count of each rating value for question passed in
+    # @param segments [Array of String] the segments by which to filter the tally of results for passed in rating question
+    # @return [Hash] a Hash containing count of each rating value for question passed in and filtered by segments passed in
     def rating_question_tally(rating_question:, segments: [])
       result = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }
       @responses.each do |r|
         r.answers.each do |a|
-          if a.question == rating_question && r.segments_contains?(segments: segments)
-            result[a.value] += 1
-          end
+          result[a.value] += 1 if a.question == rating_question && r.segments_contains?(segments: segments)
         end
       end
       result
